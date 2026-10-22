@@ -202,8 +202,10 @@ p{margin:0}
 @media(min-width:900px){ .nav__links{display:flex} }
 .nav__acc{display:flex;align-items:center;gap:8px;margin-left:auto}
 .nav .btn{min-height:40px;padding:0 18px;font-size:.88rem}
+.nav__mas{display:none}
+@media(min-width:720px){ .nav__mas{display:inline} }
 .nav__entrar{
-  display:none;padding:0 14px;min-height:40px;align-items:center;
+  display:none;padding:0 14px;min-height:40px;align-items:center;white-space:nowrap;
   font-size:.88rem;font-weight:600;color:#fff;border-radius:var(--r-full);
 }
 .nav[data-claro] .nav__entrar{color:var(--tinta)}
@@ -540,7 +542,7 @@ p{margin:0}
     <a href="#precios">Precios</a>
   </nav>
   <div class="nav__acc">
-    <a class="nav__entrar" href="https://formacion.rkpanel.com/" target="_blank" rel="noopener">Entrar</a>
+    <a class="nav__entrar" href="https://formacion.rkpanel.com/" target="_blank" rel="noopener">Acceso<span class="nav__mas">&nbsp;clientes</span></a>
     <a class="btn btn--p" href="#precios">Empezar</a>
   </div>
 </header>
@@ -575,7 +577,7 @@ p{margin:0}
         <p class="bajada ap">Practican las objeciones reales antes de tenerlas delante. En voz alta, contra un cliente simulado, con el formador corrigiéndoles dentro.</p>
         <div class="acciones ap">
           <a class="btn btn--p" href="#precios">Ver precios</a>
-          <a class="btn btn--f" href="https://formacion.rkpanel.com/" target="_blank" rel="noopener">Ver la plataforma</a>
+          <a class="btn btn--f" href="#dentro">Ver la plataforma</a>
         </div>
       </div>
     </div>
@@ -909,7 +911,7 @@ p{margin:0}
         <p class="bajada ap">Haz que todos se le parezcan. Siete días con todo abierto y sin tarjeta.</p>
         <div class="acciones ap">
           <a class="btn btn--p" href="#precios">Ver precios</a>
-          <a class="btn btn--f" href="https://formacion.rkpanel.com/" target="_blank" rel="noopener">Entrar a la plataforma</a>
+          <a class="btn btn--f" href="#dentro">Verla por dentro</a>
         </div>
       </div>
     </div>
@@ -923,7 +925,7 @@ p{margin:0}
         <a href="#roleplay">Role play</a>
         <a href="#directo">En directo</a>
         <a href="#precios">Precios</a>
-        <a href="https://formacion.rkpanel.com/" target="_blank" rel="noopener">Entrar</a>
+        <a href="https://formacion.rkpanel.com/" target="_blank" rel="noopener">Acceso clientes</a>
         <a href="#">Privacidad</a>
         <a href="#">Términos</a>
       </nav>
