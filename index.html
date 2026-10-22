@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Inmoprop AI · Tu equipo inmobiliario, entrenado por IA</title>
+<meta name="description" content="Role play con IA por voz, formación completa y una sesión en directo cada semana. Para agentes y agencias inmobiliarias. Sin entrada y sin permanencia.">
+<link rel="icon" href="favicon.png">
+<link rel="apple-touch-icon" href="favicon.png">
+<meta name="theme-color" content="#0a0c18">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Inmoprop AI · Tu equipo inmobiliario, entrenado por IA">
+<meta property="og:description" content="Practica la objeción antes de oírla. Role play con IA por voz y directo semanal con instructor.">
+<meta property="og:image" content="cap-hero.webp">
+<meta property="og:locale" content="es_ES">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="cap-hero.webp" media="(min-width:720px)">
+<link rel="preload" as="image" href="cap-hero-v.webp" media="(max-width:719px)">
+
+<style>
+/* ============================================================
+   1 · TOKENS
+   ============================================================ */
+:root{
+  --f:"Space Grotesk",system-ui,-apple-system,sans-serif;
+  --ft:"Montserrat","Space Grotesk",system-ui,sans-serif;
+
+  --tinta:#0a0c18;
+  --papel:#f4f5fb;
+  --blanco:#fff;
+  --niebla:#e3e5f0;
+  --gris:#6a6f85;
+  --tenue:#9aa0b5;
+
+  --acento:#6c5ce7;
+  --acento-2:#b84fd9;
+  --grad:linear-gradient(100deg,#6c5ce7,#9b57ff 45%,#e0569f);
+  --verde:#18b26b;
+  --vivo:#ff4d6a;
+
+  --r:14px;
+  --r-l:22px;
+  --r-full:999px;
+
+  --curva:cubic-bezier(.22,.61,.36,1);
+  --t:.25s var(--curva);
+
+  --gutter:20px;
+  --ancho:1200px;
+  --barra:0px;
+}
+@media(min-width:720px){ :root{ --gutter:32px } }
+
+*,*::before,*::after{box-sizing:border-box}
+html{
+  scroll-behavior:smooth;
+  -webkit-text-size-adjust:100%;
+}
+body{
+  margin:0;
+  font-family:var(--f);
+  font-size:17px;
+  line-height:1.55;
+  color:var(--tinta);
+  background:var(--tinta);
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font:inherit}
+h1,h2,h3{font-family:var(--ft);font-weight:900;line-height:1.02;letter-spacing:-.035em;margin:0}
+p{margin:0}
+:focus-visible{outline:2px solid #fff;outline-offset:3px;border-radius:6px}
+.oculto{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ============================================================
+   2 · EL CARRIL DE CAPÍTULOS
+   ============================================================ */
+.carril{
+  height:100svh;
+  overflow-y:auto;
+  overflow-x:hidden;
+  scroll-snap-type:y proximity;
+  scroll-behavior:smooth;
+  -webkit-overflow-scrolling:touch;
+}
+.cap{
+  position:relative;
+  min-height:100svh;
+  display:flex;
+  scroll-snap-align:start;
+  overflow:hidden;
+  isolation:isolate;
+}
+.cap__foto{position:absolute;inset:0;z-index:0}
+.cap__foto img{width:100%;height:100%;object-fit:cover}
+.cap__velo{
+  position:absolute;inset:0;z-index:1;
+  background:
+    linear-gradient(180deg,#05060fcc 0%,#05060f33 26%,#05060f00 48%),
+    linear-gradient(0deg,#05060ff2 2%,#05060fb8 26%,#05060f1a 62%);
+}
+.cap__in{
+  position:relative;z-index:2;
+  width:100%;max-width:var(--ancho);
+  margin-inline:auto;
+  padding:calc(96px + env(safe-area-inset-top)) var(--gutter) calc(104px + var(--barra) + env(safe-area-inset-bottom));
+  display:flex;flex-direction:column;justify-content:flex-end;
+  color:#fff;
+}
+@media(min-width:900px){
+  .cap__in{justify-content:center;padding-block:120px}
+  .cap__txt{max-width:min(58%,720px)}
+}
+
+.cap .indice{
+  display:inline-flex;align-items:center;gap:10px;
+  font-size:.74rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+  color:#ffffffbf;margin-bottom:18px;
+}
+.cap .indice::before{
+  content:"";width:26px;height:2px;border-radius:2px;background:var(--grad);
+}
+.cap h1,.cap h2{
+  font-size:clamp(2.5rem,1.5rem + 5.6vw,5rem);
+  margin-bottom:18px;
+  text-wrap:balance;
+  text-shadow:0 2px 30px #00000059;
+}
+.cap .bajada{
+  font-size:clamp(1.05rem,.95rem + .6vw,1.3rem);
+  color:#ffffffe6;max-width:46ch;
+  text-shadow:0 1px 18px #00000070;
+}
+.grad{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+/* dato suelto grande dentro de un capítulo */
+.dato{
+  display:flex;flex-wrap:wrap;gap:28px 44px;margin-top:30px;
+}
+.dato div{min-width:112px}
+.dato b{
+  display:block;font-family:var(--ft);font-weight:900;
+  font-size:clamp(1.9rem,1.4rem + 2vw,2.9rem);line-height:1;letter-spacing:-.04em;
+}
+.dato span{display:block;font-size:.84rem;color:#ffffffb3;margin-top:6px}
+
+/* ============================================================
+   3 · BOTONES
+   ============================================================ */
+.acciones{display:flex;flex-direction:column;gap:12px;margin-top:32px}
+@media(min-width:560px){ .acciones{flex-direction:row;flex-wrap:wrap} }
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  min-height:54px;padding:0 30px;
+  border:none;border-radius:var(--r-full);
+  font-family:var(--f);font-size:1rem;font-weight:700;
+  cursor:pointer;text-align:center;
+  transition:transform var(--t),background var(--t),box-shadow var(--t),opacity var(--t);
+  -webkit-tap-highlight-color:transparent;
+}
+@media(max-width:559px){ .btn{width:100%} }
+.btn:active{transform:scale(.975)}
+.btn--p{background:var(--grad);color:#fff;background-size:160% 100%;background-position:0 0}
+.btn--p:hover{background-position:100% 0;box-shadow:0 12px 34px #6c5ce763}
+.btn--f{background:#ffffff1f;color:#fff;border:1px solid #ffffff4d;backdrop-filter:blur(10px)}
+.btn--f:hover{background:#ffffff33}
+.btn--n{background:var(--tinta);color:#fff}
+.btn--n:hover{box-shadow:0 12px 30px #0a0c1840}
+.btn--b{background:#fff;color:var(--tinta);border:1px solid var(--niebla)}
+.btn--b:hover{border-color:var(--acento);color:var(--acento)}
+
+/* ============================================================
+   4 · NAVEGACIÓN FLOTANTE
+   ============================================================ */
+.nav{
+  position:fixed;z-index:60;
+  top:calc(12px + env(safe-area-inset-top));
+  left:var(--gutter);right:var(--gutter);
+  max-width:var(--ancho);margin-inline:auto;
+  display:flex;align-items:center;gap:14px;
+  padding:9px 10px 9px 18px;
+  border-radius:var(--r-full);
+  background:#0a0c1866;border:1px solid #ffffff21;
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  transition:background var(--t),border-color var(--t);
+}
+.nav[data-claro]{background:#ffffffd9;border-color:#0a0c1814;box-shadow:0 6px 22px #0a0c1812}
+.nav__logo img{height:22px;width:auto}
+.nav__logo .osc{display:none}
+.nav[data-claro] .nav__logo .cla{display:none}
+.nav[data-claro] .nav__logo .osc{display:block}
+.nav__links{display:none;gap:26px;margin-inline:auto}
+.nav__links a{font-size:.92rem;font-weight:500;color:#ffffffc7;transition:color var(--t)}
+.nav__links a:hover{color:#fff}
+.nav[data-claro] .nav__links a{color:var(--gris)}
+.nav[data-claro] .nav__links a:hover{color:var(--tinta)}
+@media(min-width:900px){ .nav__links{display:flex} }
+.nav__acc{display:flex;align-items:center;gap:8px;margin-left:auto}
+.nav .btn{min-height:40px;padding:0 18px;font-size:.88rem}
+.nav__entrar{
+  display:none;padding:0 14px;min-height:40px;align-items:center;
+  font-size:.88rem;font-weight:600;color:#fff;border-radius:var(--r-full);
+}
+.nav[data-claro] .nav__entrar{color:var(--tinta)}
+@media(min-width:360px){ .nav__entrar{display:inline-flex} }
+
+/* ============================================================
+   5 · DÓNDE ESTOY — puntos a la derecha / barra arriba
+   ============================================================ */
+.puntos{
+  position:fixed;z-index:55;right:18px;top:50%;transform:translateY(-50%);
+  display:none;flex-direction:column;gap:14px;
+}
+@media(min-width:1080px){ .puntos{display:flex} }
+.puntos a{
+  position:relative;width:9px;height:9px;border-radius:50%;
+  background:#ffffff4d;transition:background var(--t),transform var(--t);
+}
+.puntos a[data-aqui]{background:#fff;transform:scale(1.45)}
+.puntos a[data-oscuro]{background:#0a0c1833}
+.puntos a[data-oscuro][data-aqui]{background:var(--acento)}
+.puntos a span{
+  position:absolute;right:20px;top:50%;transform:translateY(-50%);
+  padding:4px 11px;border-radius:var(--r-full);
+  background:#0a0c18e6;color:#fff;font-size:.72rem;font-weight:600;white-space:nowrap;
+  opacity:0;pointer-events:none;transition:opacity var(--t);
+}
+.puntos a:hover span{opacity:1}
+
+.progreso{
+  position:fixed;top:0;left:0;z-index:70;height:3px;width:0;
+  background:var(--grad);transition:width .12s linear;
+}
+@media(min-width:1080px){ .progreso{display:none} }
+
+/* ============================================================
+   6 · FLECHA DE «SIGUE BAJANDO»
+   ============================================================ */
+.sigue{
+  position:absolute;z-index:3;left:50%;transform:translateX(-50%);
+  bottom:calc(26px + var(--barra) + env(safe-area-inset-bottom));
+  width:40px;height:40px;display:grid;place-items:center;
+  border-radius:50%;background:#ffffff1f;border:1px solid #ffffff3d;
+  color:#fff;backdrop-filter:blur(8px);
+  animation:bota 2.4s var(--curva) infinite;
+}
+.sigue svg{width:17px;height:17px}
+@keyframes bota{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,7px)}}
+
+/* ============================================================
+   7 · INSIGNIA EN DIRECTO
+   ============================================================ */
+.vivo{
+  display:inline-flex;align-items:center;gap:9px;margin-bottom:18px;
+  padding:7px 15px;border-radius:var(--r-full);
+  background:#ff4d6a24;border:1px solid #ff4d6a66;
+  color:#ffd0d8;font-size:.76rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+}
+.vivo i{width:8px;height:8px;border-radius:50%;background:var(--vivo);animation:late 1.8s ease-out infinite}
+@keyframes late{0%{box-shadow:0 0 0 0 #ff4d6a}70%{box-shadow:0 0 0 9px #ff4d6a00}100%{box-shadow:0 0 0 0 #ff4d6a00}}
+
+/* ============================================================
+   8 · CAPÍTULO DE PRECIOS (claro)
+   ============================================================ */
+.cap--claro{background:var(--papel);color:var(--tinta)}
+.cap--claro .cap__in{
+  color:var(--tinta);justify-content:flex-start;
+  padding-block:calc(92px + env(safe-area-inset-top)) calc(56px + var(--barra) + env(safe-area-inset-bottom));
+}
+@media(min-width:900px){ .cap--claro .cap__in{justify-content:center;padding-block:120px} }
+.cap--claro .indice{color:var(--acento)}
+.cap--claro h2{text-shadow:none;font-size:clamp(2.1rem,1.5rem + 3.2vw,3.4rem);margin-bottom:12px}
+.cap--claro .bajada{color:var(--gris);text-shadow:none;max-width:54ch}
+
+.conmu{
+  display:inline-flex;gap:3px;padding:4px;margin:26px 0 24px;
+  border-radius:var(--r-full);background:var(--niebla);
+}
+.conmu button{
+  min-height:42px;padding:0 20px;border:none;border-radius:var(--r-full);
+  background:transparent;color:var(--gris);font-size:.92rem;font-weight:600;cursor:pointer;
+  transition:background var(--t),color var(--t);
+}
+.conmu button[aria-pressed="true"]{background:#fff;color:var(--tinta);box-shadow:0 2px 8px #0a0c1814}
+.conmu em{font-style:normal;color:var(--verde);font-weight:700;margin-left:6px}
+
+/* en el móvil se elige el plan y solo se ve ese */
+.planes-sel{display:flex;gap:3px;padding:4px;margin:0 0 16px;border-radius:var(--r-full);background:var(--niebla)}
+.planes-sel button{
+  flex:1;min-height:44px;border:none;border-radius:var(--r-full);
+  background:transparent;color:var(--gris);font-size:.95rem;font-weight:700;cursor:pointer;
+  transition:background var(--t),color var(--t);
+}
+.planes-sel button[aria-pressed="true"]{background:#fff;color:var(--tinta);box-shadow:0 2px 8px #0a0c1814}
+.planes-sel button b{display:block;font-size:.72rem;font-weight:500;color:var(--tenue)}
+.planes-sel button[aria-pressed="true"] b{color:var(--acento)}
+@media(min-width:880px){ .planes-sel{display:none} }
+@media(max-width:879px){ .card[hidden]{display:none} }
+
+.tarjetas{display:grid;gap:16px;grid-template-columns:1fr}
+@media(min-width:880px){ .tarjetas{grid-template-columns:repeat(2,1fr);gap:20px;align-items:start} }
+
+.card{
+  background:#fff;border:1px solid var(--niebla);border-radius:var(--r-l);
+  padding:24px;position:relative;
+}
+.card--dest{border-color:var(--acento);box-shadow:0 18px 50px -18px #6c5ce759}
+.card__flag{
+  position:absolute;top:-12px;left:24px;
+  padding:5px 14px;border-radius:var(--r-full);
+  background:var(--grad);color:#fff;
+  font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+}
+.card h3{font-size:1.3rem;letter-spacing:-.02em;margin-bottom:4px}
+.card__quien{font-size:.86rem;color:var(--gris);margin-bottom:16px}
+.card__precio{display:flex;align-items:baseline;gap:7px;margin-bottom:4px}
+.card__precio b{font-family:var(--ft);font-weight:900;font-size:3rem;line-height:1;letter-spacing:-.045em}
+.card__precio span{font-size:.9rem;color:var(--gris);font-weight:500}
+.card__trae{font-size:.84rem;color:var(--gris);margin-bottom:18px}
+.card__trae b{color:var(--tinta);font-weight:700}
+
+.card ul{list-style:none;margin:0 0 20px;padding:0;display:grid;gap:9px}
+.card li{position:relative;padding-left:26px;font-size:.93rem;color:var(--gris);line-height:1.45}
+.card li::before{
+  content:"";position:absolute;left:0;top:.42em;width:15px;height:15px;border-radius:50%;
+  background:#18b26b1f url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2318b26b' stroke-width='3.4' stroke-linecap='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7'/%3E%3C/svg%3E") center/9px no-repeat;
+}
+.card li b{color:var(--tinta);font-weight:700}
+
+/* sumadores */
+.suma{border:1px solid var(--niebla);border-radius:var(--r);overflow:hidden;margin-bottom:18px}
+.suma__t{
+  padding:11px 16px;background:var(--papel);border-bottom:1px solid var(--niebla);
+  font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gris);
+}
+.fila{
+  display:flex;align-items:center;gap:14px;
+  padding:13px 16px;border-bottom:1px solid var(--niebla);
+}
+.fila__t{flex:1;min-width:0}
+.fila__t b{display:block;font-size:.92rem;font-weight:700}
+.fila__t span{display:block;font-size:.78rem;color:var(--gris);line-height:1.35}
+.fila__t i{font-style:normal;color:var(--tinta);font-weight:600}
+.fila__t em{font-style:normal;color:var(--verde);font-weight:600}
+.paso{
+  display:inline-flex;align-items:center;gap:2px;flex-shrink:0;
+  padding:3px;border:1px solid var(--niebla);border-radius:var(--r-full);background:#fff;
+}
+.paso button{
+  width:38px;height:38px;display:grid;place-items:center;
+  border:none;border-radius:50%;background:transparent;
+  color:var(--acento);font-size:1.3rem;font-weight:700;line-height:1;cursor:pointer;
+  transition:background var(--t);
+  -webkit-tap-highlight-color:transparent;
+}
+.paso button:hover:not(:disabled){background:#6c5ce714}
+.paso button:active:not(:disabled){background:#6c5ce724}
+.paso button:disabled{color:var(--tenue);opacity:.45;cursor:not-allowed}
+.paso output{
+  min-width:30px;text-align:center;
+  font-family:var(--ft);font-weight:900;font-size:1rem;font-variant-numeric:tabular-nums;
+}
+.suma__pie{
+  padding:10px 16px;border-bottom:1px solid var(--niebla);
+  font-size:.78rem;color:var(--tenue);line-height:1.4;margin:0;
+}
+.total{
+  display:flex;align-items:baseline;justify-content:space-between;gap:12px;
+  padding:14px 16px;background:#6c5ce70f;
+}
+.total span{font-size:.9rem;font-weight:700}
+.total small{font-weight:400;color:var(--gris)}
+.total b{
+  font-family:var(--ft);font-weight:900;font-size:1.65rem;letter-spacing:-.03em;
+  font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--acento);
+}
+.card .btn{width:100%}
+.iva{font-size:.78rem;color:var(--tenue);margin-top:18px;line-height:1.5}
+
+/* ============================================================
+   9 · BARRA DE COMPRA EN MÓVIL
+   ============================================================ */
+.compra{
+  position:fixed;z-index:65;left:0;right:0;bottom:0;
+  display:flex;align-items:center;gap:12px;
+  padding:10px var(--gutter) calc(10px + env(safe-area-inset-bottom));
+  background:#0a0c18f0;backdrop-filter:blur(16px);
+  border-top:1px solid #ffffff1a;
+  transform:translateY(110%);transition:transform .3s var(--curva);
+}
+.compra[data-ver]{transform:none}
+.compra__t{flex:1;min-width:0;color:#fff}
+.compra__t b{display:block;font-size:.95rem;font-weight:700}
+.compra__t span{display:block;font-size:.74rem;color:#ffffff9e}
+.compra .btn{min-height:46px;padding:0 22px;font-size:.92rem;width:auto}
+@media(min-width:900px){ .compra{display:none} }
+
+/* ============================================================
+   10 · PIE
+   ============================================================ */
+.pie{
+  background:var(--tinta);color:#ffffff8c;
+  padding:40px var(--gutter) calc(40px + var(--barra) + env(safe-area-inset-bottom));
+  scroll-snap-align:start;
+}
+.pie__in{max-width:var(--ancho);margin-inline:auto;display:flex;flex-wrap:wrap;gap:22px 40px;align-items:center}
+.pie img{height:20px}
+.pie nav{display:flex;flex-wrap:wrap;gap:18px}
+.pie a{font-size:.86rem;transition:color var(--t)}
+.pie a:hover{color:#fff}
+.pie__c{width:100%;font-size:.78rem;color:#ffffff5c;padding-top:18px;border-top:1px solid #ffffff14}
+
+/* ============================================================
+   11 · ENTRADA SUAVE
+   ============================================================ */
+.ap{opacity:0;transform:translateY(22px);transition:opacity .7s var(--curva),transform .7s var(--curva)}
+.ap.on{opacity:1;transform:none}
+.ap:nth-child(2){transition-delay:.07s}
+.ap:nth-child(3){transition-delay:.14s}
+.ap:nth-child(4){transition-delay:.21s}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  html,.carril{scroll-behavior:auto}
+  .carril{scroll-snap-type:none}
+  .ap{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<div class="progreso" id="progreso" aria-hidden="true"></div>
+
+<!-- ============ NAVEGACIÓN ============ -->
+<header class="nav" id="nav">
+  <a class="nav__logo" href="#hero" aria-label="Inmoprop AI — inicio">
+    <img class="cla" src="logo-oscuro.png" alt="Inmoprop AI" width="725" height="160">
+    <img class="osc" src="logo-claro.png" alt="Inmoprop AI" width="664" height="160">
+  </a>
+  <nav class="nav__links" aria-label="Secciones">
+    <a href="#roleplay">Role play</a>
+    <a href="#directo">En directo</a>
+    <a href="#panel">Tu equipo</a>
+    <a href="#precios">Precios</a>
+  </nav>
+  <div class="nav__acc">
+    <a class="nav__entrar" href="https://formacion.rkpanel.com/" target="_blank" rel="noopener">Entrar</a>
+    <a class="btn btn--p" href="#precios">Empezar</a>
+  </div>
+</header>
+
+<!-- ============ ÍNDICE LATERAL ============ -->
+<nav class="puntos" id="puntos" aria-label="Ir a un capítulo">
+  <a href="#hero" data-pt="hero"><span>Inicio</span></a>
+  <a href="#problema" data-pt="problema"><span>El problema</span></a>
+  <a href="#roleplay" data-pt="roleplay"><span>Role play</span></a>
+  <a href="#directo" data-pt="directo"><span>En directo</span></a>
+  <a href="#panel" data-pt="panel"><span>Tu equipo</span></a>
+  <a href="#precios" data-pt="precios"><span>Precios</span></a>
+  <a href="#final" data-pt="final"><span>Empezar</span></a>
+</nav>
+
+<main class="carril" id="carril">
+
+  <!-- ============ 01 · HERO ============ -->
+  <section class="cap" id="hero">
+    <div class="cap__foto">
+      <picture>
+        <source media="(max-width:719px)" srcset="cap-hero-v.webp">
+        <img src="cap-hero.webp" alt="Agente inmobiliaria trabajando con una interfaz de inteligencia artificial" width="1600" height="900" fetchpriority="high">
+      </picture>
+    </div>
+    <div class="cap__velo"></div>
+    <div class="cap__in">
+      <div class="cap__txt">
+        <span class="indice ap">Inmoprop AI</span>
+        <h1 class="ap">Tu equipo inmobiliario,<br><span class="grad">entrenado por IA</span>.</h1>
+        <p class="bajada ap">Practican las objeciones reales antes de tenerlas delante. En voz alta, contra un cliente simulado, con el formador corrigiéndoles dentro.</p>
+        <div class="acciones ap">
+          <a class="btn btn--p" href="#precios">Ver precios</a>
+          <a class="btn btn--f" href="https://formacion.rkpanel.com/" target="_blank" rel="noopener">Ver la plataforma</a>
+        </div>
+      </div>
+    </div>
+    <a class="sigue" href="#problema" aria-label="Siguiente">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+    </a>
+  </section>
+
+  <!-- ============ 02 · EL PROBLEMA ============ -->
+  <section class="cap" id="problema">
+    <div class="cap__foto">
+      <picture>
+        <source media="(max-width:719px)" srcset="cap-problema-v.webp">
+        <img src="cap-problema.webp" alt="Agente inmobiliario solo en una sala de reuniones" loading="lazy" width="1600" height="900">
+      </picture>
+    </div>
+    <div class="cap__velo"></div>
+    <div class="cap__in">
+      <div class="cap__txt">
+        <span class="indice ap">El problema</span>
+        <h2 class="ap">Nadie practica.<br>Todos improvisan.</h2>
+        <p class="bajada ap">El guion existe. No se usa. Y la objeción llega en el único momento en que ya no puedes prepararte.</p>
+      </div>
+    </div>
+    <a class="sigue" href="#roleplay" aria-label="Siguiente">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+    </a>
+  </section>
+
+  <!-- ============ 03 · ROLE PLAY ============ -->
+  <section class="cap" id="roleplay">
+    <div class="cap__foto">
+      <picture>
+        <source media="(max-width:719px)" srcset="cap-roleplay-v.webp">
+        <img src="cap-roleplay.webp" alt="Agente inmobiliario practicando una llamada" loading="lazy" width="1600" height="893">
+      </picture>
+    </div>
+    <div class="cap__velo"></div>
+    <div class="cap__in">
+      <div class="cap__txt">
+        <span class="indice ap">Role play con IA</span>
+        <h2 class="ap">Practica la objeción<br>antes de oírla.</h2>
+        <p class="bajada ap">Mantén pulsado y habla. El cliente simulado te responde, se resiste y cambia de humor. Al colgar sabes qué dijiste mal y qué decir la próxima vez.</p>
+        <div class="dato ap">
+          <div><b>Por voz</b><span>No escribiendo</span></div>
+          <div><b>24/7</b><span>Sin reservar sala</span></div>
+          <div><b>0—100</b><span>Puntuación objetiva</span></div>
+        </div>
+      </div>
+    </div>
+    <a class="sigue" href="#directo" aria-label="Siguiente">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+    </a>
+  </section>
+
+  <!-- ============ 04 · EL DIRECTO ============ -->
+  <section class="cap" id="directo">
+    <div class="cap__foto">
+      <picture>
+        <source media="(max-width:719px)" srcset="cap-directo-v.webp">
+        <img src="cap-directo.webp" alt="Instructora en una sesión en directo con agentes" loading="lazy" width="1600" height="900">
+      </picture>
+    </div>
+    <div class="cap__velo"></div>
+    <div class="cap__in">
+      <div class="cap__txt">
+        <span class="vivo ap"><i></i> En directo · cada semana</span>
+        <h2 class="ap">Y una persona<br>al otro lado.</h2>
+        <p class="bajada ap">Una sesión en directo con instructor todas las semanas, incluida en cualquier licencia. No es un vídeo grabado: es una cita fija en el calendario de tu equipo.</p>
+        <div class="dato ap">
+          <div><b>1 / sem</b><span>Sesión de agente</span></div>
+          <div><b>1 / mes</b><span>Solo para gerentes</span></div>
+          <div><b>0 €</b><span>De coste añadido</span></div>
+        </div>
+      </div>
+    </div>
+    <a class="sigue" href="#panel" aria-label="Siguiente">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+    </a>
+  </section>
+
+  <!-- ============ 05 · EL PANEL ============ -->
+  <section class="cap" id="panel">
+    <div class="cap__foto">
+      <picture>
+        <source media="(max-width:719px)" srcset="cap-panel-v.webp">
+        <img src="cap-panel.webp" alt="Panel de mando con los indicadores del equipo" loading="lazy" width="1600" height="900">
+      </picture>
+    </div>
+    <div class="cap__velo"></div>
+    <div class="cap__in">
+      <div class="cap__txt">
+        <span class="indice ap">Panel del gerente</span>
+        <h2 class="ap">Deja de volar<br>a ciegas.</h2>
+        <p class="bajada ap">Quién entrena y quién no. Quién mejora y quién se atasca. Tu equipo agrupado bajo tu licencia, con una sola factura.</p>
+      </div>
+    </div>
+    <a class="sigue" href="#precios" aria-label="Siguiente">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+    </a>
+  </section>
+
+  <!-- ============ 06 · PRECIOS ============
+       EDITABLE: los data-mes / data-anual de cada .card__precio b
+       y el bloque CFG del script.
+  ================================================== -->
+  <section class="cap cap--claro" id="precios">
+    <div class="cap__in">
+      <div style="width:100%">
+        <span class="indice ap">Precios</span>
+        <h2 class="ap">Dos licencias.<br>Y lo que necesites dentro.</h2>
+        <p class="bajada ap">Toda la formación entra en las dos. Sin entrada, sin permanencia y sin cambiar de marca.</p>
+
+        <div class="conmu ap" role="group" aria-label="Periodo de facturación">
+          <button id="b-mes" aria-pressed="true">Mensual</button>
+          <button id="b-anual" aria-pressed="false">Anual <em>−20 %</em></button>
+        </div>
+
+        <div class="planes-sel ap" role="group" aria-label="Elige una licencia">
+          <button id="s-agente" aria-pressed="true">Agente <b>desde 49 €</b></button>
+          <button id="s-agencia" aria-pressed="false">Agencia <b>desde 125 €</b></button>
+        </div>
+
+        <div class="tarjetas">
+
+          <!-- AGENTE -->
+          <article class="card ap" data-card="agente">
+            <h3>Agente</h3>
+            <p class="card__quien">Para el agente que quiere cerrar más.</p>
+            <div class="card__precio"><b data-mes="49" data-anual="39">49</b><span>€ / mes + IVA</span></div>
+            <p class="card__trae">Un usuario. Cancelas cuando quieras.</p>
+            <ul>
+              <li><b>Toda la formación</b>, también lo que se estrene</li>
+              <li><b>1 directo semanal</b> con instructor</li>
+              <li>Role plays por voz, ilimitados</li>
+              <li>Niveles, insignias y ranking</li>
+            </ul>
+            <div class="suma">
+              <div class="suma__t">Añade a tu licencia</div>
+              <div class="fila">
+                <div class="fila__t">
+                  <b>Staff</b>
+                  <span><i data-p="staff">22</i> € cada una · administración y apoyo</span>
+                </div>
+                <div class="paso" data-paso="staff" data-min="0" data-max="3" data-v="0">
+                  <button type="button" data-d="-1" aria-label="Quitar una licencia de staff">−</button>
+                  <output aria-live="polite">0</output>
+                  <button type="button" data-d="1" aria-label="Añadir una licencia de staff">+</button>
+                </div>
+              </div>
+              <p class="suma__pie">Máximo 3. Las licencias de staff solo se contratan dentro de un plan.</p>
+              <div class="total"><span>Total al mes <small>(sin IVA)</small></span><b data-total>49,00 €</b></div>
+            </div>
+            <a class="btn btn--b" href="#" data-plan="agente">Empezar con Agente</a>
+          </article>
+
+          <!-- AGENCIA -->
+          <article class="card card--dest ap" data-card="agencia">
+            <span class="card__flag">Para una oficina</span>
+            <h3>Agencia</h3>
+            <p class="card__quien">Para el gerente que monta su equipo.</p>
+            <div class="card__precio"><b data-mes="125" data-anual="100">125</b><span>€ / mes + IVA</span></div>
+            <p class="card__trae"><b>1 gerente + 1 agente.</b> Cada agente que sumas sale más barato que el anterior.</p>
+            <ul>
+              <li>Todo lo de Agente, <b>para los dos</b></li>
+              <li><b>1 directo mensual</b> solo para gerentes</li>
+              <li><b>Tu oficina virtual</b> con el equipo debajo</li>
+              <li>Panel del gerente y una sola factura</li>
+            </ul>
+            <div class="suma">
+              <div class="suma__t">Monta tu equipo</div>
+              <div class="fila">
+                <div class="fila__t">
+                  <b>Gerentes de más</b>
+                  <span><i data-p="gerente">83,30</i> € cada uno · −15 %</span>
+                </div>
+                <div class="paso" data-paso="gerente" data-min="0" data-max="5" data-v="0">
+                  <button type="button" data-d="-1" aria-label="Quitar un gerente">−</button>
+                  <output aria-live="polite">0</output>
+                  <button type="button" data-d="1" aria-label="Añadir un gerente">+</button>
+                </div>
+              </div>
+              <div class="fila">
+                <div class="fila__t">
+                  <b>Agentes de más</b>
+                  <span><i data-p="agente">39,00</i> € cada uno <em data-ahorro></em></span>
+                </div>
+                <div class="paso" data-paso="agente" data-min="0" data-max="20" data-v="0">
+                  <button type="button" data-d="-1" aria-label="Quitar un agente">−</button>
+                  <output aria-live="polite">0</output>
+                  <button type="button" data-d="1" aria-label="Añadir un agente">+</button>
+                </div>
+              </div>
+              <div class="fila">
+                <div class="fila__t">
+                  <b>Staff</b>
+                  <span><i data-p="staff">22</i> € cada una · administración y apoyo</span>
+                </div>
+                <div class="paso" data-paso="staff" data-min="0" data-max="20" data-v="0">
+                  <button type="button" data-d="-1" aria-label="Quitar una licencia de staff">−</button>
+                  <output aria-live="polite">0</output>
+                  <button type="button" data-d="1" aria-label="Añadir una licencia de staff">+</button>
+                </div>
+              </div>
+              <p class="suma__pie" data-resumen>1 gerente y 1 agente.</p>
+              <div class="total"><span>Total al mes <small>(sin IVA)</small></span><b data-total>125,00 €</b></div>
+            </div>
+            <a class="btn btn--p" href="#" data-plan="agencia">Empezar con Agencia</a>
+          </article>
+        </div>
+
+        <p class="iva ap"><b>7 días de prueba</b>, sin entrada y sin permanencia. Los precios no llevan IVA: en España se añade el 21 % al pagar. Si eres empresa de otro país de la UE con NIF-IVA intracomunitario, lo introduces al contratar y no se te añade.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 07 · CIERRE ============ -->
+  <section class="cap" id="final">
+    <div class="cap__foto">
+      <picture>
+        <source media="(max-width:719px)" srcset="cap-cierre-v.webp">
+        <img src="cap-cierre.webp" alt="Agente inmobiliario profesional" loading="lazy" width="1600" height="900">
+      </picture>
+    </div>
+    <div class="cap__velo"></div>
+    <div class="cap__in">
+      <div class="cap__txt">
+        <span class="indice ap">Empieza hoy</span>
+        <h2 class="ap">Tu mejor agente ya<br>está en tu oficina.</h2>
+        <p class="bajada ap">Haz que todos se le parezcan. Siete días con todo abierto y sin tarjeta.</p>
+        <div class="acciones ap">
+          <a class="btn btn--p" href="#precios">Ver precios</a>
+          <a class="btn btn--f" href="https://formacion.rkpanel.com/" target="_blank" rel="noopener">Entrar a la plataforma</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PIE ============ -->
+  <footer class="pie">
+    <div class="pie__in">
+      <img src="logo-oscuro.png" alt="Inmoprop AI">
+      <nav>
+        <a href="#roleplay">Role play</a>
+        <a href="#directo">En directo</a>
+        <a href="#precios">Precios</a>
+        <a href="https://formacion.rkpanel.com/" target="_blank" rel="noopener">Entrar</a>
+        <a href="#">Privacidad</a>
+        <a href="#">Términos</a>
+      </nav>
+      <p class="pie__c">© 2026 Inmoprop AI · Entrena. Conecta. Crece.</p>
+    </div>
+  </footer>
+</main>
+
+<!-- ============ BARRA DE COMPRA EN MÓVIL ============ -->
+<div class="compra" id="compra">
+  <div class="compra__t">
+    <b>Desde 49 € al mes</b>
+    <span>7 días de prueba · sin permanencia</span>
+  </div>
+  <a class="btn btn--p" href="#precios">Ver precios</a>
+</div>
+
+<script>
+/* ============================================================
+   PRECIOS
+   ============================================================ */
+(function(){
+  /* ===== CONFIG · cambia solo esto ===== */
+  var CFG = {
+    staff:         22,    // licencia de staff al mes
+    gerenteSuelto: 98,    // lo que costaría un gerente suelto
+    dtoGerente:    0.15,  // −15 % en cada gerente adicional
+    agenteBase:    39,    // 1.er agente adicional
+    dtoAgente:     0.05,  // cada agente más, un 5 % menos
+    sueloAgente:   29,    // mínimo por agente adicional
+    anual:         0.8    // −20 % al año
+  };
+  /* ===================================== */
+
+  var periodo = 'mes';
+  var bMes = document.getElementById('b-mes'), bAnual = document.getElementById('b-anual');
+  var f = function(){ return periodo === 'anual' ? CFG.anual : 1; };
+  var eur = function(n){ return n.toLocaleString('es-ES',{minimumFractionDigits:2,maximumFractionDigits:2}) + ' €'; };
+  var num = function(n){ return n.toLocaleString('es-ES',{minimumFractionDigits:2,maximumFractionDigits:2}); };
+  var pGerente = CFG.gerenteSuelto * (1 - CFG.dtoGerente);
+
+  function precioAgente(n){
+    if (n <= 1) return CFG.agenteBase;
+    return Math.max(CFG.sueloAgente,
+      Math.round(CFG.agenteBase * Math.pow(1 - CFG.dtoAgente, n - 1) * 100) / 100);
+  }
+  function v(paso){ return parseInt(paso.dataset.v, 10) || 0; }
+
+  document.querySelectorAll('.paso').forEach(function(paso){
+    paso.querySelectorAll('button').forEach(function(b){
+      b.addEventListener('click', function(){
+        var min = +paso.dataset.min, max = +paso.dataset.max;
+        paso.dataset.v = Math.min(max, Math.max(min, v(paso) + (+b.dataset.d)));
+        paso.querySelector('output').textContent = paso.dataset.v;
+        pintar();
+      });
+    });
+  });
+
+  function pintarCard(c){
+    var base = +c.querySelector('.card__precio b').dataset[periodo === 'anual' ? 'anual' : 'mes'];
+    var p = {};
+    c.querySelectorAll('.paso').forEach(function(x){ p[x.dataset.paso] = v(x); });
+
+    var uStaff = CFG.staff * f(), uGer = pGerente * f();
+    var nAg = p.agente || 0, uAg = precioAgente(nAg) * f();
+    var total = base + (p.staff||0)*uStaff + (p.gerente||0)*uGer + nAg*uAg;
+
+    c.querySelectorAll('[data-p]').forEach(function(el){
+      var k = el.dataset.p;
+      el.textContent = num(k === 'staff' ? uStaff : k === 'gerente' ? uGer : uAg);
+    });
+
+    var ah = c.querySelector('[data-ahorro]');
+    if (ah) {
+      var d = nAg * (CFG.agenteBase * f() - uAg);
+      ah.textContent = d > 0.005 ? '· ahorras ' + eur(d) : '';
+    }
+
+    var r = c.querySelector('[data-resumen]');
+    if (r) {
+      var g = 1 + (p.gerente||0), a = 1 + nAg, s = p.staff||0;
+      var t = [g + (g===1?' gerente':' gerentes'), a + (a===1?' agente':' agentes')];
+      if (s) t.push(s + (s===1?' licencia de staff':' licencias de staff'));
+      r.textContent = t.slice(0,-1).join(', ') + ' y ' + t[t.length-1] + '. ' +
+        (nAg ? 'Cada agente extra sale a ' + eur(uAg) + ', con el suelo en ' + eur(CFG.sueloAgente*f()) + '.'
+             : 'Cada agente que añadas abarata a todos los demás, hasta ' + eur(CFG.sueloAgente*f()) + '.');
+    }
+
+    c.querySelector('[data-total]').textContent = eur(total);
+
+    c.querySelectorAll('.paso').forEach(function(x){
+      x.querySelector('[data-d="-1"]').disabled = v(x) <= +x.dataset.min;
+      x.querySelector('[data-d="1"]').disabled  = v(x) >= +x.dataset.max;
+    });
+  }
+
+  function pintar(){
+    document.querySelectorAll('.card__precio b').forEach(function(b){
+      b.textContent = periodo === 'anual' ? b.dataset.anual : b.dataset.mes;
+    });
+    document.querySelectorAll('.card__precio span').forEach(function(s){
+      if (!s.dataset.base) s.dataset.base = s.textContent;
+      s.textContent = periodo === 'anual' ? s.dataset.base + ' · al año' : s.dataset.base;
+    });
+    document.querySelectorAll('[data-card]').forEach(pintarCard);
+  }
+  function set(x){
+    periodo = x;
+    bMes.setAttribute('aria-pressed', x === 'mes' ? 'true' : 'false');
+    bAnual.setAttribute('aria-pressed', x === 'anual' ? 'true' : 'false');
+    pintar();
+  }
+  bMes.addEventListener('click', function(){ set('mes'); });
+  bAnual.addEventListener('click', function(){ set('anual'); });
+  pintar();
+})();
+
+/* ============================================================
+   SELECTOR DE PLAN EN MÓVIL
+   ============================================================ */
+(function(){
+  var sA = document.getElementById('s-agente'), sB = document.getElementById('s-agencia');
+  var cA = document.querySelector('[data-card="agente"]'), cB = document.querySelector('[data-card="agencia"]');
+  if (!sA || !cA) return;
+  var movil = window.matchMedia('(max-width:879px)');
+
+  function set(cual){
+    var esA = cual === 'agente';
+    sA.setAttribute('aria-pressed', esA ? 'true' : 'false');
+    sB.setAttribute('aria-pressed', esA ? 'false' : 'true');
+    if (movil.matches) { cA.hidden = !esA; cB.hidden = esA; }
+    else { cA.hidden = false; cB.hidden = false; }
+  }
+  sA.addEventListener('click', function(){ set('agente'); });
+  sB.addEventListener('click', function(){ set('agencia'); });
+  movil.addEventListener('change', function(){
+    set(sB.getAttribute('aria-pressed') === 'true' ? 'agencia' : 'agente');
+  });
+  set('agente');
+})();
+
+/* ============================================================
+   DÓNDE ESTOY · nav, puntos, progreso y barra de compra
+   ============================================================ */
+(function(){
+  var carril = document.getElementById('carril');
+  var nav    = document.getElementById('nav');
+  var barra  = document.getElementById('progreso');
+  var compra = document.getElementById('compra');
+  var puntos = document.querySelectorAll('.puntos a');
+  var caps   = Array.prototype.slice.call(document.querySelectorAll('.cap'));
+  var claro  = document.getElementById('precios');
+  var hero   = document.getElementById('hero');
+  var pend   = false;
+
+  function medir(){
+    var h = compra && getComputedStyle(compra).display !== 'none' ? compra.offsetHeight : 0;
+    document.documentElement.style.setProperty('--barra', h + 'px');
+  }
+
+  function pinta(){
+    pend = false;
+    var y = carril.scrollTop;
+    var alto = carril.scrollHeight - carril.clientHeight;
+    if (barra) barra.style.width = (alto > 0 ? (y/alto)*100 : 0) + '%';
+
+    /* capítulo actual: el que cruza el tercio superior */
+    var linea = y + carril.clientHeight * 0.34;
+    var actual = caps[0];
+    caps.forEach(function(c){ if (c.offsetTop <= linea) actual = c; });
+
+    puntos.forEach(function(p){
+      var suyo = p.getAttribute('href').slice(1) === actual.id;
+      if (suyo) p.setAttribute('data-aqui',''); else p.removeAttribute('data-aqui');
+      if (actual === claro) p.setAttribute('data-oscuro',''); else p.removeAttribute('data-oscuro');
+    });
+
+    /* la nav se aclara sobre el capítulo claro */
+    if (actual === claro) nav.setAttribute('data-claro',''); else nav.removeAttribute('data-claro');
+
+    /* la barra de compra aparece al salir del hero y se esconde en precios */
+    if (compra) {
+      var fueraHero = y > hero.offsetHeight * 0.7;
+      var enPrecios = y + carril.clientHeight > claro.offsetTop + 120 && y < claro.offsetTop + claro.offsetHeight;
+      if (fueraHero && !enPrecios) compra.setAttribute('data-ver',''); else compra.removeAttribute('data-ver');
+    }
+  }
+
+  carril.addEventListener('scroll', function(){
+    if (!pend) { pend = true; requestAnimationFrame(pinta); }
+  }, { passive:true });
+  window.addEventListener('resize', function(){ medir(); pinta(); });
+  medir(); pinta();
+
+  /* los enlaces internos desplazan el carril, no la ventana */
+  document.querySelectorAll('a[href^="#"]').forEach(function(a){
+    a.addEventListener('click', function(e){
+      var d = document.getElementById(a.getAttribute('href').slice(1));
+      if (!d) return;
+      e.preventDefault();
+      carril.scrollTo({ top:d.offsetTop, behavior:'smooth' });
+    });
+  });
+})();
+
+/* ============================================================
+   ENTRADA SUAVE DE CADA CAPÍTULO
+   ============================================================ */
+(function(){
+  var items = document.querySelectorAll('.ap');
+  if (!('IntersectionObserver' in window)) {
+    items.forEach(function(e){ e.classList.add('on'); });
+    return;
+  }
+  var io = new IntersectionObserver(function(es){
+    es.forEach(function(e){ if (e.isIntersecting) { e.target.classList.add('on'); io.unobserve(e.target); } });
+  }, { root: document.getElementById('carril'), threshold:0.12 });
+  items.forEach(function(e){ io.observe(e); });
+})();
+</script>
+</body>
+</html>
