@@ -21,10 +21,31 @@ muy cerrado. El capítulo de precios es una hoja clara que corta el ritmo de las
 | 01 | Hero | Tu equipo inmobiliario, entrenado por IA |
 | 02 | El problema | Nadie practica. Todos improvisan |
 | 03 | Role play | Practica la objeción antes de oírla |
-| 04 | En directo | Y una persona al otro lado |
-| 05 | Panel | Deja de volar a ciegas |
-| 06 | Precios | Dos licencias y los sumadores |
-| 07 | Cierre | Tu mejor agente ya está en tu oficina |
+| 04 | **Por dentro** | **No te lo contamos. Te lo enseñamos** |
+| 05 | En directo | Y una persona al otro lado |
+| 06 | Panel | Deja de volar a ciegas |
+| 07 | Precios | Dos licencias y los sumadores |
+| 08 | Cierre | Tu mejor agente ya está en tu oficina |
+
+## El capítulo «Por dentro»
+
+Seis grabaciones reales de la plataforma en marcos de móvil, en una fila que se
+desliza. Cada clip **se reproduce solo, sin sonido, al entrar en pantalla** y se
+para al salir, así que en el móvil nunca hay más de uno o dos corriendo. Al pulsar
+cualquiera se abre a pantalla completa con sonido y controles (se cierra con Escape,
+con la X o tocando fuera).
+
+| Clip | Qué enseña |
+|---|---|
+| demo-rp-javier | Role play · Javier, 48 — la objeción de la exclusividad |
+| demo-rp-elena | Role play · Elena, 72 — la objeción emocional |
+| demo-rp-ricardo | Role play · Don Ricardo, 50 — el cliente que te pone a prueba |
+| demo-tutor | El tutor de IA respondiendo sobre el temario |
+| demo-metodo | El mismo bloque en vídeo, audiolibro y con la IA |
+| demo-indicadores | Los indicadores del plan de carrera |
+
+Los clips van en `.webm` y `.mp4` con `preload="none"` y póster `.jpg`: no se
+descarga nada hasta que el clip entra en pantalla.
 
 ## Pensado para el móvil
 
